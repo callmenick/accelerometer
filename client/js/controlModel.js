@@ -4,26 +4,15 @@ var Control = (function(){
    * Control
    * Description: Constructor function for the Control
    */
-  function Control(){
-    this.io = null;
+  var Control = function() {
     this.data = {
       velocity: {
         x: 0,
         y: 0
-      }
+      },
+      decelerate: false,
+      accelerate: false
     };
-  }
-
-  /**
-   * Control connect
-   * Description: Connects Control to socket
-   */
-  Control.prototype.connect = function(){
-    var self = this;
-    self.io = io.connect();
-    self.io.on('identity',function(){
-      self.io.emit('identity', 'client');
-    });
   };
 
   /**
@@ -33,7 +22,8 @@ var Control = (function(){
   Control.prototype.updateVelocity = function(x,y){
     this.data.velocity.x = x;
     this.data.velocity.y = y;
-    this.emitData();
+    // need to send a constant request here to the server
+    // $();
   };
 
   /**
@@ -70,32 +60,6 @@ var Control = (function(){
    */
   Control.prototype.accelerateEnd = function(){
     this.data.accelerate = false;
-  };
-
-  /**
-   * Control emitData
-   * Description: Will emit the Control data to the server.
-   */
-  Control.prototype.emitData = function(){
-    var self = this;
-    if (!self.io) {
-      throw new Error("Control not connected");
-    } else {
-      self.io.emit('updateData', self.data);
-    }
-  };
-
-  /**
-   * Control startCommunication
-   * Description: Will start sending information to the display client every
-   * 'intervalTime' (in ms)
-   */
-  Control.prototype.startCommunication = function(intervalTime) {
-    var self = this;
-    var interval = intervalTime || 1000;
-    setInterval(function(){
-      self.emitData();
-    },interval);
   };
 
   return Control;

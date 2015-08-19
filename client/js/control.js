@@ -19,8 +19,6 @@ window.addEventListener('contextmenu', function(e) {
  * communication lines
  */
 var control = new Control();
-control.connect();
-// control.startCommunication();
 
 /**
  * posX, posY
@@ -30,16 +28,6 @@ control.connect();
 var posX = 0;
 var posY = 0;
 
-/**
- * setInterval updateVelocity
- * Inputs: posX, posY
- * Description: Every 20 milliseconds, it will call updateVelocity in
- * communication/client.js.
- */
-setInterval(function(){
-  control.updateVelocity(posX, posY);
-}, 20);
-
 
 
 
@@ -48,9 +36,7 @@ setInterval(function(){
 ////////////////////////////////////
 
 
-var x = 0, y = 0,
-    vx = 0, vy = 0,
-    ax = 0, ay = 0;
+var x = 0, y = 0, vx = 0, vy = 0, ax = 0, ay = 0;
   
 if (window.DeviceMotionEvent != undefined) {
   window.ondevicemotion = function(e) {
@@ -59,6 +45,8 @@ if (window.DeviceMotionEvent != undefined) {
     } else {
       posX = 0;
     }
+
+    control.updateVelocity(posX, posY);
 
     $('.log').html('phoneX: ' + posX + '<br>controlX: ' + control.data.velocity.x);
   };
