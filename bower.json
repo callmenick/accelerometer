@@ -1,0 +1,13 @@
+{
+  "name": "accelerometer",
+  "version": "1.0.0",
+  "homepage": "https://github.com/callmenick/accelerometer",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
